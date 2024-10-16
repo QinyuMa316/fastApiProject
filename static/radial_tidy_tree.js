@@ -8,7 +8,10 @@ async function fetchAndRenderTree() {
     }
 }
 
+document.addEventListener("DOMContentLoaded", fetchAndRenderTree);
+
 function renderTree(treeData) {
+
 
     // size
     const width = 928;
@@ -71,6 +74,9 @@ function renderTree(treeData) {
         .attr("stroke", "white")
         .attr("fill", "currentColor")
         .text(d => d.data.name);
+
+    document.body.appendChild(svg.node());
+    // document.body.appendChild(button); // Append button to document
 }
 
 fetchAndRenderTree();

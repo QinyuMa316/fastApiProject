@@ -11,7 +11,7 @@ templates = Jinja2Templates(directory="templates")
 
 # 节点定义
 class Node(BaseModel):
-    label: str
+    name: str
     children: Optional[List['Node']] = None
 
 # Node.update_forward_refs() is deprecated
