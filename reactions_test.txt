@@ -1,0 +1,27 @@
+Reaction idx: 1
+Reactants: A, B
+Products: C, D, E
+
+Reaction idx: 2
+Reactants: C, B
+Products: F, G, E
+
+Reaction idx: 3
+Reactants: D, F
+Products: C, H, G
+
+Reaction idx: 4
+Reactants: K, B
+Products: X, A, L
+
+Reaction idx: 5
+Reactants: A, L
+Products: B, M, F
+
+Reaction idx: 6
+Reactants: E, H
+Products: A, X, M
+
+Reaction idx: 7
+Reactants: C, B, F
+Products: K, L

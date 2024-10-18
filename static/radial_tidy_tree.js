@@ -42,7 +42,7 @@ function renderTree(treeData) {
         .attr("fill", "none")
         .attr("stroke", "#555")
         .attr("stroke-opacity", 0.4)
-        .attr("stroke-width", 1.5)
+        .attr("stroke-width", 1) // 修改边的粗细1.5
       .selectAll()
       .data(root.links())
       .join("path")
@@ -51,29 +51,43 @@ function renderTree(treeData) {
             .radius(d => d.y));
 
     // Append nodes.
+    // svg.append("g")
+    //   .selectAll()
+    //   .data(root.descendants())
+    //   .join("circle")
+    //     .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
+    //     .attr("fill", d => d.children ? "#555" : "#999")
+    //     .attr("r", 2.5);
+
+     // Append nodes.
     svg.append("g")
       .selectAll()
       .data(root.descendants())
       .join("circle")
         .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-        .attr("fill", d => d.children ? "#555" : "#999")
-        .attr("r", 2.5);
+        .attr("fill", d => {
+          if (!d.children) return "#8ecfc9"; // 叶子节点
+          else if (d.name === root.name) return "#82b0d2"; // 根节点
+          else return "#beb8dc"; // 中间节点
+        })
+        .attr("r", 4); // 节点大小设置2.5
 
     // Append labels.
-    svg.append("g")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-width", 3)
-      .selectAll()
-      .data(root.descendants())
-      .join("text")
-        .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0) rotate(${d.x >= Math.PI ? 180 : 0})`)
-        .attr("dy", "0.31em")
-        .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
-        .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
-        .attr("paint-order", "stroke")
-        .attr("stroke", "white")
-        .attr("fill", "currentColor")
-        .text(d => d.data.name);
+    // svg.append("g")
+    //     .attr("stroke-linejoin", "round")
+    //     .attr("stroke-width", 3)
+    //   .selectAll()
+    //   .data(root.descendants())
+    //   .join("text")
+    //     .filter(d => !d.children) // new added
+    //     .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0) rotate(${d.x >= Math.PI ? 180 : 0})`)
+    //     .attr("dy", "0.31em")
+    //     .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
+    //     .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
+    //     .attr("paint-order", "stroke")
+    //     .attr("stroke", "white")
+    //     .attr("fill", "currentColor")
+    //     .text(d => d.data.name);
 
     document.body.appendChild(svg.node());
     // document.body.appendChild(button); // Append button to document
