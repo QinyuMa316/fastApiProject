@@ -339,3 +339,46 @@ function highlightPaths(bigRoot, smallTreeLevels){
         }
     }
 }
+
+function downloadCSV(csv, filename) {
+    let csvFile;
+    let downloadLink;
+
+    // 创建CSV文件
+    csvFile = new Blob([csv], { type: 'text/csv' });
+
+    // 创建下载链接
+    downloadLink = document.createElement('a');
+
+    // 文件名
+    downloadLink.download = filename;
+
+    // 创建链接
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // 隐藏链接
+    downloadLink.style.display = 'none';
+
+    // 添加到页面并点击下载
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+
+function exportTableToCSV(filename) {
+    let csv = [];
+    let rows = document.querySelectorAll("table tr");
+
+    // 遍历表格的每一行
+    for (let i = 0; i < rows.length; i++) {
+        let cols = rows[i].querySelectorAll("td");
+        // 遍历每一行的列
+        for (let j = 0; j < cols.length; j++) {
+            let row = cols[j].innerText.split(":");
+            csv.push(row.join(";"));
+        }
+    }
+
+    // 下载CSV文件
+    downloadCSV(csv.join("\n"), filename);
+}
