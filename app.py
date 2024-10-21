@@ -88,10 +88,14 @@ material = 'Polyimide'
 # 【测试用例2】
 from RetroSynAgent.treebuilder import TreeLoader, Tree
 tree_loader = TreeLoader()
-# tree_filename = material + '_wo_exp.pkl'
 # tree_filename = material + '.pkl'
-tree_filename = material + '2.pkl'
+
 # tree_filename = material + '_filtered.pkl'
+
+# 【小图】
+# tree_filename = material + '_wo_exp.pkl'
+# 【大图】
+tree_filename = material + '2.pkl'
 tree = tree_loader.load_tree(tree_filename)
 
 api_tree = create_tree_from_saved_tree(tree)
