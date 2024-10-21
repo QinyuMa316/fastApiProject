@@ -340,21 +340,16 @@ function highlightPaths(bigRoot, smallTreeLevels){
     }
 }
 
-function downloadCSV(csv, filename) {
-    let csvFile;
-    let downloadLink;
+function download(json, filename) {
+    const jsonString = JSON.stringify(json);
 
-    // 创建CSV文件
-    csvFile = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob([jsonString], { type: 'application/json' });
 
-    // 创建下载链接
-    downloadLink = document.createElement('a');
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
 
     // 文件名
     downloadLink.download = filename;
-
-    // 创建链接
-    downloadLink.href = window.URL.createObjectURL(csvFile);
 
     // 隐藏链接
     downloadLink.style.display = 'none';
@@ -365,8 +360,9 @@ function downloadCSV(csv, filename) {
     document.body.removeChild(downloadLink);
 }
 
-function exportTableToCSV(filename) {
-    let csv = [];
+function exportTableToJson(filename) {
+    let ret = {"data": []};
+    let json = ret["data"];
     let rows = document.querySelectorAll("table tr");
 
     // 遍历表格的每一行
@@ -375,10 +371,11 @@ function exportTableToCSV(filename) {
         // 遍历每一行的列
         for (let j = 0; j < cols.length; j++) {
             let row = cols[j].innerText.split(":");
-            csv.push(row.join(";"));
+            json.push(row[1]);
         }
     }
+    console.log(ret);
 
     // 下载CSV文件
-    downloadCSV(csv.join("\n"), filename);
+    download(ret, filename);
 }
