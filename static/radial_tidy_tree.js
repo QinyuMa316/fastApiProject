@@ -278,6 +278,19 @@ function renderDoubleTree(bigTreeData, smallTreeData){
     const button = document.getElementById("downloadBtn");
     button.innerText = "Download SVG";
     button.addEventListener("click", () => {
+        const svgNode = svg.node();
+        // 获取页面中所有的 <style> 标签内容
+        const styleSheets = document.querySelectorAll("style");
+        let styleContent = "";
+        styleSheets.forEach(sheet => {
+            styleContent += sheet.innerHTML;
+        });
+
+            // 创建一个 <style> 元素并添加到 SVG 的 <defs> 中
+        const styleElement = document.createElementNS("http://www.w3.org/2000/svg", "style");
+        styleElement.innerHTML = styleContent;
+        svgNode.querySelector("defs")?.appendChild(styleElement) || svgNode.insertBefore(styleElement, svgNode.firstChild);
+
         const serializer = new XMLSerializer();
         const svgBlob = new Blob([serializer.serializeToString(svg.node())], {type: "image/svg+xml"});
         const url = URL.createObjectURL(svgBlob);
