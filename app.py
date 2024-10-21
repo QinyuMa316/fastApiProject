@@ -93,7 +93,8 @@ tree_loader = TreeLoader()
 # tree_filename = material + '_filtered.pkl'
 
 # 【小图】
-small_tree_filename = material + '_wo_exp.pkl'
+# small_tree_filename = material + '_wo_exp.pkl'
+small_tree_filename = material + '_filtered.pkl'
 # 【大图】
 big_tree_filename = material + '2.pkl'
 big_tree = tree_loader.load_tree(big_tree_filename)
