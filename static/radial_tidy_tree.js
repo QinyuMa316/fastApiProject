@@ -209,28 +209,6 @@ function renderDoubleTree(bigTreeData, smallTreeData){
             .radius(d => d.y));
 
     // Append nodes.
-    // svg.append("g")
-    //   .selectAll()
-    //   .data(root.descendants())
-    //   .join("circle")
-    //     .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-    //     .attr("fill", d => d.children ? "#555" : "#999")
-    //     .attr("r", 2.5);
-
-    // Append nodes.
-    // svg.append("g")
-    //   .selectAll()
-    //   .data(root.descendants())
-    //   .join("circle")
-    //     .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-    //     .attr("fill", d => {
-    //       if (!d.children) return "#8ecfc9"; // 叶子节点
-    //       else if (d === root) return "#82b0d2"; // 根节点
-    //       else return "#beb8dc"; // 中间节点
-    //     })
-    //     .attr("r", 4); // 节点大小设置2.5
-
-    // Append nodes.
     const nodes = svg.append("g")
         .selectAll()
         .data(bigTreeRoot.descendants())
