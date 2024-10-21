@@ -88,16 +88,19 @@ material = 'Polyimide'
 # 【测试用例2】
 from RetroSynAgent.treebuilder import TreeLoader, Tree
 tree_loader = TreeLoader()
-# tree_filename = material + '_wo_exp.pkl'
 # tree_filename = material + '.pkl'
-tree_filename = material + '2.pkl'
+
 # tree_filename = material + '_filtered.pkl'
-tree = tree_loader.load_tree(tree_filename)
 
-api_tree = create_tree_from_saved_tree(tree)
+# 【小图】
+small_tree_filename = material + '_wo_exp.pkl'
+# 【大图】
+big_tree_filename = material + '2.pkl'
+big_tree = tree_loader.load_tree(big_tree_filename)
+small_tree = tree_loader.load_tree(small_tree_filename)
 
-# =======
-
+api_tree = create_tree_from_saved_tree(big_tree)
+small_api_tree = create_tree_from_saved_tree(small_tree)
 
 # 路由：主页
 @app.get("/", response_class=HTMLResponse)
@@ -110,3 +113,10 @@ async def get_tree():
     # return create_tree()
     return api_tree
 
+# 路由：返回两个树
+@app.get("/api/double")
+async def get_double():
+    return {
+        "bigTree": api_tree,
+        "smallTree": small_api_tree
+    }
