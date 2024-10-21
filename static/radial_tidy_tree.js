@@ -250,23 +250,6 @@ function renderDoubleTree(bigTreeData, smallTreeData){
         .attr("font-size", "10px")  // 设置字体大小
         .attr("fill", "black");  // 设置字体颜色
 
-    // Append labels.
-    // svg.append("g")
-    //     .attr("stroke-linejoin", "round")
-    //     .attr("stroke-width", 3)
-    //   .selectAll()
-    //   .data(root.descendants())
-    //   .join("text")
-    //     .filter(d => !d.children) // new added
-    //     .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0) rotate(${d.x >= Math.PI ? 180 : 0})`)
-    //     .attr("dy", "0.31em")
-    //     .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
-    //     .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
-    //     .attr("paint-order", "stroke")
-    //     .attr("stroke", "white")
-    //     .attr("fill", "currentColor")
-    //     .text(d => d.data.name);
-
     document.getElementById("tree-container").appendChild(svg.node());
     // document.body.appendChild(button); // Append button to document
 
@@ -289,6 +272,23 @@ function renderDoubleTree(bigTreeData, smallTreeData){
         }
     });
 
+    // 下载按钮
+    // 下载SVG图像
+    // Add download button
+    const button = document.getElementById("downloadBtn");
+    button.innerText = "Download SVG";
+    button.addEventListener("click", () => {
+        const serializer = new XMLSerializer();
+        const svgBlob = new Blob([serializer.serializeToString(svg.node())], {type: "image/svg+xml"});
+        const url = URL.createObjectURL(svgBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "chart.svg";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
 }
 
 function getNodesByLevel(root){
